@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TDEQ-5 Questionnaire | Tennis Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --court:    #1B6B3A;
+    --court-dk: #134d2a;
+    --ball:     #C8E61A;
+    --ball-lt:  #e8f59a;
+    --white:    #FFFFFF;
+    --card:     #FFFFFF;
+    --bg:       #F0F4EE;
+    --border:   #D1DDD0;
+    --text:     #1A2E1A;
+    --sub:      #4A6741;
+    --hindi:    #3D5C3A;
+    --shadow:   0 2px 12px rgba(27,107,58,0.10);
+    --shadow-lg:0 8px 32px rgba(27,107,58,0.13);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  .banner {
+    background: linear-gradient(135deg, var(--court-dk) 0%, var(--court) 60%, #2a8a4e 100%);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(255,255,255,0.04) 38px, rgba(255,255,255,0.04) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 38px, rgba(255,255,255,0.04) 38px, rgba(255,255,255,0.04) 40px);
+  }
+  .banner-inner {
+    position: relative; z-index: 1;
+    max-width: 740px; margin: 0 auto;
+    padding: 48px 32px 36px;
+  }
+  .banner-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,230,26,0.18);
+    border: 1px solid rgba(200,230,26,0.4);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11.5px; font-weight: 600; letter-spacing: .08em;
+    color: var(--ball);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .tennis-ball-icon {
+    width: 14px; height: 14px;
+    background: var(--ball);
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .banner h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .banner-sub { font-size: 13.5px; color: rgba(255,255,255,0.72); font-weight: 400; }
+  .banner-hindi { font-size: 12.5px; color: rgba(200,230,26,0.8); margin-top: 4px; }
+
+  .progress-wrap { background: rgba(0,0,0,0.2); height: 4px; }
+  .progress-bar { height: 4px; background: var(--ball); width: 0%; transition: width .4s ease; border-radius: 0 2px 2px 0; }
+  .progress-label {
+    max-width: 740px; margin: 0 auto;
+    padding: 6px 32px;
+    font-size: 11px; color: rgba(255,255,255,0.55); font-weight: 500;
+    display: flex; justify-content: space-between;
+  }
+
+  .container { max-width: 740px; margin: 0 auto; padding: 0 16px; }
+
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 28px 32px;
+    margin-top: 20px;
+    border: 1px solid var(--border);
+    transition: box-shadow .2s;
+  }
+  .card:hover { box-shadow: var(--shadow-lg); }
+  .card-accent { border-left: 5px solid var(--court); }
+
+  .section-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #e9f5ee; border: 1px solid #b5d9c2;
+    border-radius: 6px; padding: 4px 12px;
+    font-size: 11px; font-weight: 700; letter-spacing: .07em;
+    color: var(--court); text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 16px; }
+  .field-row { display: flex; gap: 20px; flex-wrap: wrap; }
+  .field-wrap { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 200px; }
+  .field-label { font-size: 13px; font-weight: 600; color: var(--text); }
+  .field-label span { font-size: 11.5px; color: var(--sub); font-weight: 400; margin-left: 4px; }
+  .field-input {
+    width: 100%; border: none; border-bottom: 2px solid var(--border);
+    background: transparent; padding: 8px 2px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
+    outline: none; transition: border-color .2s;
+  }
+  .field-input:focus { border-color: var(--court); }
+  .field-input::placeholder { color: #b0bdb0; }
+
+  .consent-text {
+    font-size: 12.5px; color: #4a5e4a; line-height: 1.75;
+    background: #f4f9f5; border-radius: 8px;
+    padding: 16px 18px; border-left: 3px solid #9ecfb0;
+  }
+  .consent-text p { margin-bottom: 10px; }
+  .consent-text p:last-child { margin-bottom: 0; }
+
+  .signature-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+  .sig-field { flex: 1; min-width: 200px; }
+
+  .q-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px 26px 18px; margin-top: 14px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .q-card:focus-within { border-color: var(--court); box-shadow: 0 0 0 3px rgba(27,107,58,0.08); }
+
+  .q-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; background: var(--court); color: #fff;
+    border-radius: 50%; font-size: 11px; font-weight: 700;
+    flex-shrink: 0; margin-right: 10px; vertical-align: middle;
+  }
+  .q-en { font-size: 14.5px; font-weight: 500; color: var(--text); line-height: 1.5; display: inline; }
+  .q-hi { font-size: 12.5px; color: var(--hindi); line-height: 1.6; margin-top: 6px; padding-left: 36px; font-style: italic; }
+
+  .scale-wrap { margin-top: 16px; padding-left: 2px; }
+
+  .radio-row {
+    display: flex; gap: 0;
+    background: #f5f8f5; border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .radio-option {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 10px 4px; cursor: pointer; position: relative;
+    transition: background .15s; border-right: 1px solid var(--border);
+  }
+  .radio-option:last-child { border-right: none; }
+  .radio-option:hover { background: #e6f0e9; }
+  .radio-option input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+
+  .radio-dot {
+    width: 20px; height: 20px; border: 2px solid #b5c9b6;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    transition: border-color .15s, background .15s; margin-bottom: 4px;
+  }
+  .radio-dot::after {
+    content: ''; width: 10px; height: 10px;
+    background: var(--court); border-radius: 50%; opacity: 0; transition: opacity .15s;
+  }
+  .radio-option input:checked ~ .radio-dot { border-color: var(--court); background: rgba(27,107,58,0.08); }
+  .radio-option input:checked ~ .radio-dot::after { opacity: 1; }
+  .radio-option input:checked ~ .radio-label { color: var(--court); font-weight: 700; }
+  .radio-option.selected-opt { background: #dff0e6; }
+
+  .radio-label { font-size: 10px; font-weight: 500; color: var(--sub); transition: color .15s; text-align: center; line-height: 1.2; }
+
+  .scale-legend {
+    display: flex; justify-content: space-between;
+    margin-bottom: 6px; padding: 0 2px;
+  }
+  .scale-legend span { font-size: 10px; color: var(--sub); font-weight: 500; }
+
+  .section-divider {
+    margin-top: 30px; display: flex; align-items: center; gap: 14px;
+  }
+  .section-divider-line { flex: 1; height: 1px; background: var(--border); }
+  .section-divider-label { font-size: 12px; font-weight: 700; color: var(--court); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+
+  .submit-wrap { margin-top: 32px; text-align: center; }
+  .submit-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--court); color: #fff;
+    border: none; border-radius: 8px; padding: 14px 40px;
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; letter-spacing: .02em;
+    box-shadow: 0 4px 18px rgba(27,107,58,0.28);
+    transition: background .2s, transform .15s, box-shadow .2s;
+  }
+  .submit-btn:hover { background: var(--court-dk); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(27,107,58,0.38); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+  .submit-btn .ball-icon { width: 18px; height: 18px; background: var(--ball); border-radius: 50%; }
+
+  .success-screen {
+    display: none; background: var(--card); border-radius: 12px;
+    padding: 56px 32px; text-align: center; margin-top: 20px;
+    box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+  }
+  .success-icon {
+    width: 64px; height: 64px; background: var(--court); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px; font-size: 28px; color: #fff;
+  }
+  .success-screen h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--court); margin-bottom: 10px; }
+  .success-screen p { font-size: 14px; color: var(--sub); line-height: 1.6; }
+
+  .req { color: #c0392b; margin-left: 2px; }
+
+  .form-footer { text-align: center; margin-top: 28px; font-size: 11.5px; color: #7a9b7a; padding-bottom: 8px; }
+  .form-footer span { color: var(--court); font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .card { padding: 20px 16px; }
+    .q-card { padding: 16px 14px; }
+    .banner-inner { padding: 36px 16px 28px; }
+    .radio-label { font-size: 8.5px; }
+    .radio-dot { width: 16px; height: 16px; }
+    .radio-dot::after { width: 7px; height: 7px; }
+    .field-row { flex-direction: column; }
+    .signature-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="banner">
+  <div class="banner-inner">
+    <div class="banner-tag">
+      <span class="tennis-ball-icon"></span>
+      Tennis Academy · Research Questionnaire
+    </div>
+    <h1>Talent Development Environment Questionnaire</h1>
+    <p class="banner-sub">TDEQ-5 &nbsp;|&nbsp; Tennis Athlete Feedback Form</p>
+    <p class="banner-hindi">प्रतिभा विकास पर्यावरण प्रश्नावली · टेनिस खिलाड़ी प्रतिक्रिया फ़ॉर्म</p>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-label">
+    <span id="progressText">0 of 25 answered</span>
+    <span id="progressPct">0%</span>
+  </div>
+</div>
+
+<div class="container" id="formContainer">
+
+  <!-- ATHLETE INFO -->
+  <div class="card card-accent" style="margin-top:24px;">
+    <div class="section-chip">🎾 Athlete Information</div>
+    <div class="field-group">
+      <div class="field-row">
+        <div class="field-wrap">
+          <label class="field-label">Name of the Academy <span>(अकादमी का नाम)</span><span class="req">*</span></label>
+          <input class="field-input" type="text" placeholder="e.g. Sunrise Tennis Academy" id="academy" required>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">Place of the Academy <span>(अकादमी का स्थान)</span><span class="req">*</span></label>
+          <input class="field-input" type="text" placeholder="e.g. Jaipur, Rajasthan" id="place" required>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-wrap">
+          <label class="field-label">Name of the Athlete <span>(खिलाड़ी का नाम)</span><span class="req">*</span></label>
+          <input class="field-input" type="text" placeholder="Your full name" id="athlete" required>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">Date of Birth <span>(जन्म तिथि)</span><span class="req">*</span></label>
+          <input class="field-input" type="date" id="dob" required>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-wrap">
+          <label class="field-label">Height <span>(ऊँचाई)</span></label>
+          <input class="field-input" type="text" placeholder="e.g. 165 cm" id="height">
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">Weight <span>(वजन)</span></label>
+          <input class="field-input" type="text" placeholder="e.g. 60 kg" id="weight">
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">State of Domicile <span>(राज्य)</span></label>
+          <input class="field-input" type="text" placeholder="e.g. Rajasthan" id="state">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-wrap">
+          <label class="field-label">Years Practicing Tennis <span>(टेनिस खेलने के वर्ष)</span></label>
+          <input class="field-input" type="text" placeholder="e.g. 5 years" id="yearsTotal">
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">Years at Current Academy <span>(वर्तमान अकादमी में वर्ष)</span></label>
+          <input class="field-input" type="text" placeholder="e.g. 2 years" id="yearsCurrent">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-wrap">
+          <label class="field-label">Highest Achievement in Tennis <span>(सर्वोच्च उपलब्धि)</span></label>
+          <input class="field-input" type="text" placeholder="e.g. State Champion 2023" id="achievement">
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">Highest Achievement in Last One Year <span>(पिछले एक वर्ष में)</span></label>
+          <input class="field-input" type="text" placeholder="e.g. District Runner-up" id="achievementRecent">
+        </div>
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">Contact Details <span>(संपर्क विवरण)</span></label>
+        <input class="field-input" type="text" placeholder="Phone / Email" id="contact">
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSENT -->
+  <div class="card" style="margin-top:14px;">
+    <div class="section-chip">📋 Informed Consent / सहमति</div>
+    <div class="consent-text">
+      <p>I understand that the purpose of this study is to gather information about the <strong>talent development environment experienced by athletes</strong>. I have been informed that my participation in this study involves completing a questionnaire consisting of questions related to my experiences in the sport.</p>
+      <p>I understand that my responses will be kept <strong>strictly confidential</strong> and will only be used for research purposes. I have had the opportunity to ask any questions I may have about the study, and those questions have been answered to my satisfaction.</p>
+      <p>I understand that by signing below, I am agreeing to participate in this study <strong>voluntarily</strong>.</p>
+      <p><em style="font-size:11.5px;">मैं समझता/समझती हूँ कि इस अध्ययन का उद्देश्य खिलाड़ियों द्वारा अनुभव किए गए प्रतिभा विकास पर्यावरण के बारे में जानकारी एकत्र करना है। मेरी प्रतिक्रियाएँ गोपनीय रखी जाएंगी।</em></p>
+    </div>
+    <div class="signature-row">
+      <div class="sig-field field-wrap">
+        <label class="field-label">Participant's Signature <span>(हस्ताक्षर)</span><span class="req">*</span></label>
+        <input class="field-input" type="text" placeholder="Type your full name as signature" id="signature" required>
+      </div>
+      <div class="sig-field field-wrap">
+        <label class="field-label">Date <span>(तारीख)</span><span class="req">*</span></label>
+        <input class="field-input" type="date" id="date" required>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCALE LEGEND -->
+  <div class="card" style="padding:16px 26px 10px; margin-top:14px;">
+    <p style="font-size:12px;color:var(--sub);line-height:1.7;">
+      <strong>Scale / स्केल:</strong> &nbsp;
+      1 = Strongly Agree (पूर्ण रूप से सहमत) &nbsp;·&nbsp;
+      2 = Agree (सहमत) &nbsp;·&nbsp;
+      3 = Agree a little bit (थोड़ा सहमत) &nbsp;·&nbsp;
+      4 = Disagree a little bit (थोड़ा असहमत) &nbsp;·&nbsp;
+      5 = Disagree (असहमत) &nbsp;·&nbsp;
+      6 = Strongly Disagree (पूर्ण रूप से असहमत)
+    </p>
+  </div>
+
+  <!-- QUESTIONS -->
+
+  <!-- Q1 -->
+  <div class="q-card" style="margin-top:20px;">
+    <div><span class="q-number">1</span><span class="q-en">My training is specifically designed to help me develop effectively in the long term.</span></div>
+    <div class="q-hi">मेरे प्रशिक्षण को विशेष रूप से ऐसे तैयार किया गया है जो मुझे दीर्घकालिक (long term) प्रभावी ढंग से विकसित करने में मदद करे।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q1" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card">
+    <div><span class="q-number">2</span><span class="q-en">My coach emphasizes that what I do in training and competition is far more important than winning.</span></div>
+    <div class="q-hi">मेरे कोच का जोर उस बात पर है कि जो मैं प्रशिक्षण और प्रतियोगिता में करता/करती हूँ, वह जीतने से कहीं अधिक महत्वपूर्ण है।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q2" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q2" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q2" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q2" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q2" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q2" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card">
+    <div><span class="q-number">3</span><span class="q-en">I spend most of my time developing skills and attributes that my coach tells me I will need if I am to compete successfully at the top/professional level.</span></div>
+    <div class="q-hi">मैं अधिकांश समय उन कौशल और गुणों के विकास में बिताता/बिताती हूँ, जिन्हें मेरे कोच ने मुझे बताया है कि शीर्ष/पेशेवर स्तर (top/professional level) पर सफलता के लिए आवश्यक होंगे।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q3" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q3" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q3" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q3" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q3" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q3" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card">
+    <div><span class="q-number">4</span><span class="q-en">My coach allows me to learn through making my own mistakes.</span></div>
+    <div class="q-hi">मेरे कोच मुझे अपनी गलतियों से सीखने देते हैं।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q4" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q4" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q4" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q4" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q4" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q4" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card">
+    <div><span class="q-number">5</span><span class="q-en">I would be given good opportunities even if I experienced a dip in performance.</span></div>
+    <div class="q-hi">अगर मेरे प्रदर्शन में थोड़ी कमी आती है, तो भी मुझे अवसर दिए जाएंगे।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q5" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q5" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q5" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q5" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q5" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q5" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card">
+    <div><span class="q-number">6</span><span class="q-en">My coaches make time to talk to my parents about me and what I am trying to achieve.</span></div>
+    <div class="q-hi">मेरे कोच मेरे माता-पिता के साथ मेरे बारे में और मैं क्या प्राप्त करने का प्रयास कर रहा/रही हूँ, के बारे में बातचीत करने का समय निकालते हैं।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q6" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q6" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q6" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q6" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q6" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q6" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card">
+    <div><span class="q-number">7</span><span class="q-en">The advice my parents give me fits well with the advice I get from my coaches.</span></div>
+    <div class="q-hi">मेरे माता-पिता द्वारा मुझे दी गई सलाह मेरे कोचों द्वारा दी गई सलाह से मिलती-जुलती होती है।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q7" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q7" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q7" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q7" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q7" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q7" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card">
+    <div><span class="q-number">8</span><span class="q-en">My progress and personal performance is reviewed regularly on an individual basis.</span></div>
+    <div class="q-hi">मेरी प्रगति और व्यक्तिगत प्रदर्शन की समीक्षा व्यक्तिगत स्तर पर नियमित रूप से की जाती है।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q8" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q8" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q8" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q8" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q8" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q8" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card">
+    <div><span class="q-number">9</span><span class="q-en">I am involved in most decisions about my development.</span></div>
+    <div class="q-hi">मेरे विकास के बारे में ज़्यादातर निर्णयों में मुझे शामिल किया जाता है।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q9" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q9" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q9" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q9" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q9" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q9" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card">
+    <div><span class="q-number">10</span><span class="q-en">I regularly set goals with my coach that are specific to my individual development.</span></div>
+    <div class="q-hi">मैं नियमित रूप से अपने कोच के साथ लक्ष्य निर्धारित करता/करती हूँ जो मेरे व्यक्तिगत विकास (individual development) के लिए विशेष (specific) होते हैं।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q10" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q10" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q10" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q10" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q10" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q10" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card">
+    <div><span class="q-number">11</span><span class="q-en">My coach and I regularly talk about things I need to do to progress to the top level in my sport (e.g. training ethos, competition performances, physically, mentally, technically, tactically).</span></div>
+    <div class="q-hi">मेरे कोच और मैं नियमित रूप से बातचीत करते हैं कि मुझे अपने खेल में शीर्ष स्तर तक प्रगति के लिए क्या करना चाहिए (जैसे- प्रशिक्षण के आदर्श, प्रतियोगिता में प्रदर्शन, शारीरिक, मानसिक, तकनीकी, युक्तिक विकास)।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q11" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q11" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q11" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q11" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q11" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q11" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card">
+    <div><span class="q-number">12</span><span class="q-en">My coach and I talk about what current and/or past world-class performers did to be successful.</span></div>
+    <div class="q-hi">मेरे कोच और मैं बातचीत करते हैं कि वर्तमान और/या पिछले विश्व-क्लास प्रदर्शकों (world-class performers) ने सफल होने के लिए क्या किया।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q12" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q12" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q12" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q12" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q12" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q12" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card">
+    <div><span class="q-number">13</span><span class="q-en">My coach and I often try to identify what my next big test will be before it happens.</span></div>
+    <div class="q-hi">मेरे कोच और मैं अक्सर यह प्रयास करते हैं कि हम पहले ही यह पहचानें कि मेरी अगली बड़ी परीक्षा क्या होगी।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q13" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q13" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q13" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q13" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q13" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q13" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card">
+    <div><span class="q-number">14</span><span class="q-en">My coach explains how my training and competition programme work together to help me develop.</span></div>
+    <div class="q-hi">मेरे कोच व्याख्या (explain) करते हैं कि मेरा प्रशिक्षण और प्रतियोगिता कैसे एक साथ मिलकर मेरे विकास (development) में सहायक होंगे।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q14" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q14" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q14" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q14" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q14" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q14" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card">
+    <div><span class="q-number">15</span><span class="q-en">My coach rarely talks to me about my well-being.</span></div>
+    <div class="q-hi">मेरे कोच बहुत ही कम मुझसे मेरी कुशल-क्षेम (well-being) के बारे में पूछते हैं।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q15" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q15" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q15" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q15" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q15" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q15" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card">
+    <div><span class="q-number">16</span><span class="q-en">My coach doesn't appear to be that interested in my life outside of sport.</span></div>
+    <div class="q-hi">मुझे ऐसा लगता है कि मेरे कोच मेरे खेल के जीवन के अलावा (life outside of sport) इतनी रुचि नहीं लेते।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q16" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q16" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q16" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q16" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q16" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q16" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card">
+    <div><span class="q-number">17</span><span class="q-en">My coach rarely takes the time to talk to other coaches who work with me.</span></div>
+    <div class="q-hi">मेरे कोच अक्सर मेरे साथ काम करने वाले अन्य कोचों से बातचीत करने का समय नहीं निकालते हैं।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q17" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q17" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q17" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q17" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q17" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q17" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card">
+    <div><span class="q-number">18</span><span class="q-en">I don't get much help to develop my mental toughness in sport effectively.</span></div>
+    <div class="q-hi">मुझे खेल में मानसिक मजबूती (mental toughness in sport) को प्रभावी ढंग से विकसित करने के लिए बहुत कम सहायता मिलती है।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q18" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q18" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q18" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q18" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q18" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q18" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card">
+    <div><span class="q-number">19</span><span class="q-en">I am rarely encouraged to plan for how I would deal with things that might go wrong.</span></div>
+    <div class="q-hi">मुझे बहुत कम प्रोत्साहित किया जाता है कि मैं ऐसी चीजों के लिए योजना बनाऊं जो गलत हो सकती हैं।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q19" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q19" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q19" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q19" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q19" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q19" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card">
+    <div><span class="q-number">20</span><span class="q-en">The guidelines in my sport regarding what I need to do to progress are not very clear.</span></div>
+    <div class="q-hi">मेरे खेल में मुझे आगे बढ़ने के लिए जो करना चाहिए, उन दिशानिर्देशों में स्पष्टता नहीं है।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q20" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q20" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q20" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q20" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q20" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q20" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q21 -->
+  <div class="q-card">
+    <div><span class="q-number">21</span><span class="q-en">I am not taught that much about how to balance training, competing, and recovery.</span></div>
+    <div class="q-hi">मुझे खेल, प्रतियोगिता, और पुनर्स्थापना (recovery) को संतुलित करने के बारे में बहुत कुछ सिखाया नहीं जाता।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q21" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q21" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q21" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q21" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q21" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q21" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q22 -->
+  <div class="q-card">
+    <div><span class="q-number">22</span><span class="q-en">Currently, I have access to a variety of different types of professionals to help my sports development (e.g. physiotherapist, sport psychologist, strength trainer, nutritionist, lifestyle advisor).</span></div>
+    <div class="q-hi">वर्तमान में, मेरे पास विभिन्न प्रकार के विशेषज्ञ लोग हैं जो मेरे खेल के विकास में मदद करते हैं जैसे फिजियोथेरेपिस्ट, खेल मनोवैज्ञानिक, शक्ति प्रशिक्षक, पोषण विशेषज्ञ, जीवनशैली सलाहकार।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q22" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q22" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q22" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q22" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q22" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q22" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q23 -->
+  <div class="q-card">
+    <div><span class="q-number">23</span><span class="q-en">I can pop in to see my coach or other support staff whenever I need to (e.g. physiotherapist, psychologist, strength trainer, nutritionist, lifestyle advisor).</span></div>
+    <div class="q-hi">मैं अपने कोच या अन्य समर्थन स्टाफ के पास जब भी मुझे जरूरत हो, उनसे मिलने जा सकता/सकती हूँ।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q23" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q23" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q23" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q23" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q23" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q23" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q24 -->
+  <div class="q-card">
+    <div><span class="q-number">24</span><span class="q-en">My coaches talk regularly to the other people who support me in my sport about what I am trying to achieve (e.g. physiotherapist, sport psychologist, nutritionist, strength and conditioning coach, lifestyle advisor).</span></div>
+    <div class="q-hi">मेरे कोच नियमित रूप से मेरे खेल में मेरे लक्ष्य के बारे में मुझे समर्थन करने वाले अन्य व्यक्तियों से बातचीत करते हैं।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q24" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q24" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q24" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q24" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q24" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q24" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q25 -->
+  <div class="q-card">
+    <div><span class="q-number">25</span><span class="q-en">Those who help me in my sport seem to be on the same wavelength as each other when it comes to what is best for me (e.g. coaches, physiotherapists, sport psychologists, strength trainers, nutritionists, lifestyle advisors).</span></div>
+    <div class="q-hi">मेरे खेल में मेरी मदद करने वाले व्यक्ति एक दूसरे के साथ समन्वय रखते हैं कि मेरे लिए क्या सर्वोत्तम है।</div>
+    <div class="scale-wrap">
+      <div class="scale-legend"><span>1 - Strongly Agree</span><span>6 - Strongly Disagree</span></div>
+      <div class="radio-row">
+        <label class="radio-option"><input type="radio" name="q25" value="1"><span class="radio-dot"></span><span class="radio-label">1<br>पूर्ण सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q25" value="2"><span class="radio-dot"></span><span class="radio-label">2<br>सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q25" value="3"><span class="radio-dot"></span><span class="radio-label">3<br>थोड़ा सहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q25" value="4"><span class="radio-dot"></span><span class="radio-label">4<br>थोड़ा असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q25" value="5"><span class="radio-dot"></span><span class="radio-label">5<br>असहमत</span></label>
+        <label class="radio-option"><input type="radio" name="q25" value="6"><span class="radio-dot"></span><span class="radio-label">6<br>पूर्ण असहमत</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <button class="submit-btn" onclick="submitForm()">
+      <span class="ball-icon"></span>
+      Submit Questionnaire &nbsp;|&nbsp; फ़ॉर्म जमा करें
+    </button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2>Response Submitted!</h2>
+    <p>Thank you for completing the TDEQ-5 Questionnaire.<br>
+    Your responses have been recorded and will remain confidential.<br><br>
+    <em style="color:#5a8a5a;">इस प्रश्नावली को पूरा करने के लिए धन्यवाद।<br>आपकी प्रतिक्रियाएँ गोपनीय रहेंगी।</em></p>
+  </div>
+
+  <div class="form-footer">
+    TDEQ-5 Questionnaire &nbsp;·&nbsp; <span>Tennis Academy</span> &nbsp;·&nbsp; Responses are confidential
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 25;
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjexGn5fuGfLNVd3-u5Tg091CKYsg_RUUkLn7Hta8pJuhoSoVts8y7wNG3FdDC-Vcc/exec';
+
+  function updateProgress() {
+    let answered = 0;
+    for (let i = 1; i <= TOTAL; i++) {
+      if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+    }
+    const pct = Math.round((answered / TOTAL) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${answered} of ${TOTAL} answered`;
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+
+  document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const row = this.closest('.radio-row');
+      row.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected-opt'));
+      this.closest('.radio-option').classList.add('selected-opt');
+      updateProgress();
+    });
+  });
+
+  async function submitForm() {
+    const academy         = document.getElementById('academy').value.trim();
+    const place           = document.getElementById('place').value.trim();
+    const athlete         = document.getElementById('athlete').value.trim();
+    const dob             = document.getElementById('dob').value;
+    const height          = document.getElementById('height').value.trim();
+    const weight          = document.getElementById('weight').value.trim();
+    const state           = document.getElementById('state').value.trim();
+    const yearsTotal      = document.getElementById('yearsTotal').value.trim();
+    const yearsCurrent    = document.getElementById('yearsCurrent').value.trim();
+    const achievement     = document.getElementById('achievement').value.trim();
+    const achievementRecent = document.getElementById('achievementRecent').value.trim();
+    const contact         = document.getElementById('contact').value.trim();
+    const signature       = document.getElementById('signature').value.trim();
+    const date            = document.getElementById('date').value;
+
+    if (!academy || !place || !athlete || !dob || !signature || !date) {
+      alert('Please fill in all required fields (marked with *).\nकृपया सभी आवश्यक जानकारी भरें।');
+      return;
+    }
+
+    let unanswered = [];
+    for (let i = 1; i <= TOTAL; i++) {
+      if (!document.querySelector(`input[name="q${i}"]:checked`)) unanswered.push(i);
+    }
+    if (unanswered.length > 0) {
+      alert(`Please answer all questions. Unanswered: Q${unanswered.slice(0,5).join(', Q')}${unanswered.length > 5 ? '...' : ''}\nकृपया सभी प्रश्नों का उत्तर दें।`);
+      return;
+    }
+
+    const data = {
+      Timestamp: new Date().toLocaleString(),
+      Academy: academy,
+      Place: place,
+      Athlete: athlete,
+      DateOfBirth: dob,
+      Height: height,
+      Weight: weight,
+      State: state,
+      YearsPracticingTennis: yearsTotal,
+      YearsAtCurrentAcademy: yearsCurrent,
+      HighestAchievement: achievement,
+      AchievementLastYear: achievementRecent,
+      Contact: contact,
+      Signature: signature,
+      Date: date
+    };
+    for (let i = 1; i <= TOTAL; i++) {
+      data[`Q${i}`] = document.querySelector(`input[name="q${i}"]:checked`).value;
+    }
+
+    const btn = document.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting... / जमा हो रहा है...';
+
+    function showSuccess() {
+      document.querySelectorAll('.q-card, .card, .section-divider').forEach(el => el.style.display = 'none');
+      document.querySelector('.submit-wrap').style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+      document.getElementById('progressBar').style.width = '100%';
+      document.getElementById('progressText').textContent = '25 of 25 answered';
+      document.getElementById('progressPct').textContent = '100%';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showError() {
+      btn.disabled = false;
+      btn.innerHTML = '<span class="ball-icon"></span> Submit Questionnaire &nbsp;|&nbsp; फ़ॉर्म जमा करें';
+      alert('Submission failed. Please check your internet connection and try again.\nकृपया इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।');
+    }
+
+    try {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', SCRIPT_URL, true);
+      xhr.setRequestHeader('Content-Type', 'text/plain');
+      xhr.onload = function() { showSuccess(); };
+      xhr.onerror = function() { showSuccess(); };
+      xhr.ontimeout = function() { showError(); };
+      xhr.timeout = 15000;
+      xhr.send(JSON.stringify(data));
+    } catch (err) {
+      showError();
+    }
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date').value = today;
+
+  updateProgress();
+</script>
+</body>
+</html>

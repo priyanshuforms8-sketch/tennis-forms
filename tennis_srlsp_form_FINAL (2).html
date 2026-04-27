@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SRL-SP Questionnaire | Tennis Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --court:    #1B6B3A;
+    --court-dk: #134d2a;
+    --ball:     #C8E61A;
+    --ball-lt:  #e8f59a;
+    --white:    #FFFFFF;
+    --card:     #FFFFFF;
+    --bg:       #F0F4EE;
+    --border:   #D1DDD0;
+    --text:     #1A2E1A;
+    --sub:      #4A6741;
+    --hindi:    #3D5C3A;
+    --radio-on: #1B6B3A;
+    --shadow:   0 2px 12px rgba(27,107,58,0.10);
+    --shadow-lg:0 8px 32px rgba(27,107,58,0.13);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  /* ── BANNER ── */
+  .banner {
+    background: linear-gradient(135deg, var(--court-dk) 0%, var(--court) 60%, #2a8a4e 100%);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(255,255,255,0.04) 38px, rgba(255,255,255,0.04) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 38px, rgba(255,255,255,0.04) 38px, rgba(255,255,255,0.04) 40px);
+  }
+  .banner-inner {
+    position: relative; z-index: 1;
+    max-width: 740px; margin: 0 auto;
+    padding: 48px 32px 36px;
+  }
+  .banner-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,230,26,0.18);
+    border: 1px solid rgba(200,230,26,0.4);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11.5px; font-weight: 600; letter-spacing: .08em;
+    color: var(--ball);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .tennis-ball-icon {
+    width: 14px; height: 14px;
+    background: var(--ball);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .banner h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .banner-sub {
+    font-size: 13.5px; color: rgba(255,255,255,0.72);
+    font-weight: 400; margin-bottom: 0;
+  }
+  .banner-hindi {
+    font-size: 12.5px; color: rgba(200,230,26,0.8);
+    margin-top: 4px;
+  }
+
+  /* progress bar */
+  .progress-wrap {
+    background: rgba(0,0,0,0.2);
+    height: 4px;
+    border-radius: 0;
+  }
+  .progress-bar {
+    height: 4px;
+    background: var(--ball);
+    width: 0%;
+    transition: width .4s ease;
+    border-radius: 0 2px 2px 0;
+  }
+  .progress-label {
+    max-width: 740px; margin: 0 auto;
+    padding: 6px 32px;
+    font-size: 11px; color: rgba(255,255,255,0.55);
+    font-weight: 500;
+    display: flex; justify-content: space-between;
+  }
+
+  /* ── CONTAINER ── */
+  .container { max-width: 740px; margin: 0 auto; padding: 0 16px; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 28px 32px;
+    margin-top: 20px;
+    border: 1px solid var(--border);
+    transition: box-shadow .2s;
+  }
+  .card:hover { box-shadow: var(--shadow-lg); }
+
+  /* accent left bar on first card */
+  .card-accent {
+    border-left: 5px solid var(--court);
+  }
+
+  /* ── SECTION LABELS ── */
+  .section-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #e9f5ee;
+    border: 1px solid #b5d9c2;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 11px; font-weight: 700; letter-spacing: .07em;
+    color: var(--court);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  /* ── INFO FIELDS (Academy, Athlete) ── */
+  .field-group { display: flex; flex-direction: column; gap: 16px; }
+  .field-wrap { display: flex; flex-direction: column; gap: 5px; }
+  .field-label {
+    font-size: 13px; font-weight: 600; color: var(--text);
+  }
+  .field-label span { font-size: 11.5px; color: var(--sub); font-weight: 400; margin-left: 4px; }
+  .field-input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    padding: 8px 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--text);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .field-input:focus { border-color: var(--court); }
+  .field-input::placeholder { color: #b0bdb0; }
+
+  /* ── CONSENT ── */
+  .consent-text {
+    font-size: 12.5px; color: #4a5e4a;
+    line-height: 1.75;
+    background: #f4f9f5;
+    border-radius: 8px;
+    padding: 16px 18px;
+    border-left: 3px solid #9ecfb0;
+  }
+  .consent-text p { margin-bottom: 10px; }
+  .consent-text p:last-child { margin-bottom: 0; }
+
+  .signature-row {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .sig-field { flex: 1; min-width: 200px; }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px 18px;
+    margin-top: 14px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .q-card:focus-within {
+    border-color: var(--court);
+    box-shadow: 0 0 0 3px rgba(27,107,58,0.08);
+  }
+
+  .q-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px;
+    background: var(--court);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+  .q-en {
+    font-size: 14.5px; font-weight: 500; color: var(--text);
+    line-height: 1.5; display: inline;
+  }
+  .q-hi {
+    font-size: 12.5px; color: var(--hindi);
+    line-height: 1.6;
+    margin-top: 6px;
+    padding-left: 36px;
+    font-style: italic;
+  }
+
+  /* ── SCALE ── */
+  .scale-wrap {
+    margin-top: 16px;
+    padding-left: 2px;
+  }
+  .scale-labels {
+    display: flex; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .scale-label-text {
+    font-size: 10px; color: var(--sub); font-weight: 500;
+    text-align: center; flex: 1;
+  }
+
+  .radio-row {
+    display: flex; gap: 0;
+    background: #f5f8f5;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .radio-option {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 10px 4px;
+    cursor: pointer;
+    position: relative;
+    transition: background .15s;
+    border-right: 1px solid var(--border);
+  }
+  .radio-option:last-child { border-right: none; }
+  .radio-option:hover { background: #e6f0e9; }
+
+  .radio-option input[type="radio"] {
+    position: absolute; opacity: 0; width: 0; height: 0;
+  }
+  .radio-dot {
+    width: 20px; height: 20px;
+    border: 2px solid #b5c9b6;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .15s, background .15s;
+    margin-bottom: 4px;
+  }
+  .radio-dot::after {
+    content: '';
+    width: 10px; height: 10px;
+    background: var(--court);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity .15s;
+  }
+  .radio-option input:checked ~ .radio-dot {
+    border-color: var(--court);
+    background: rgba(27,107,58,0.08);
+  }
+  .radio-option input:checked ~ .radio-dot::after { opacity: 1; }
+  .radio-option input:checked ~ .radio-num { color: var(--court); font-weight: 700; }
+
+  .radio-option.selected-opt {
+    background: #dff0e6;
+  }
+
+  .radio-num {
+    font-size: 11px; font-weight: 500; color: var(--sub);
+    transition: color .15s;
+  }
+
+  /* compact version for agree/disagree (fewer chars) */
+  .scale-7 .radio-option { padding: 10px 2px; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    margin-top: 30px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-divider-line {
+    flex: 1; height: 1px; background: var(--border);
+  }
+  .section-divider-label {
+    font-size: 12px; font-weight: 700; color: var(--court);
+    text-transform: uppercase; letter-spacing: .08em;
+    white-space: nowrap;
+  }
+
+  /* ── SUBMIT BUTTON ── */
+  .submit-wrap {
+    margin-top: 32px; text-align: center;
+  }
+  .submit-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--court);
+    color: #fff;
+    border: none; border-radius: 8px;
+    padding: 14px 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer;
+    letter-spacing: .02em;
+    box-shadow: 0 4px 18px rgba(27,107,58,0.28);
+    transition: background .2s, transform .15s, box-shadow .2s;
+  }
+  .submit-btn:hover {
+    background: var(--court-dk);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(27,107,58,0.38);
+  }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn .ball-icon {
+    width: 18px; height: 18px;
+    background: var(--ball);
+    border-radius: 50%;
+  }
+
+  /* ── SUCCESS SCREEN ── */
+  .success-screen {
+    display: none;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 56px 32px;
+    text-align: center;
+    margin-top: 20px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+  }
+  .success-icon {
+    width: 64px; height: 64px;
+    background: var(--court);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+  }
+  .success-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; color: var(--court);
+    margin-bottom: 10px;
+  }
+  .success-screen p { font-size: 14px; color: var(--sub); line-height: 1.6; }
+
+  /* ── REQUIRED STAR ── */
+  .req { color: #c0392b; margin-left: 2px; }
+
+  /* ── FOOTER ── */
+  .form-footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 11.5px; color: #7a9b7a;
+    padding-bottom: 8px;
+  }
+  .form-footer span { color: var(--court); font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .card { padding: 20px 16px; }
+    .q-card { padding: 16px 14px; }
+    .banner-inner { padding: 36px 16px 28px; }
+    .radio-num { font-size: 9px; }
+    .radio-dot { width: 18px; height: 18px; }
+    .radio-dot::after { width: 8px; height: 8px; }
+    .signature-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="banner">
+  <div class="banner-inner">
+    <div class="banner-tag">
+      <span class="tennis-ball-icon"></span>
+      Tennis Academy · Research Questionnaire
+    </div>
+    <h1>Self-Regulation of Learning for Sport Practice</h1>
+    <p class="banner-sub">SRL-SP Questionnaire &nbsp;|&nbsp; Tennis Student Feedback Form</p>
+    <p class="banner-hindi">स्व-नियमन प्रश्नावली · टेनिस खिलाड़ी प्रतिक्रिया फ़ॉर्म</p>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-label">
+    <span id="progressText">0 of 26 answered</span>
+    <span id="progressPct">0%</span>
+  </div>
+</div>
+
+<div class="container" id="formContainer">
+
+  <!-- ── ATHLETE INFO ── -->
+  <div class="card card-accent" style="margin-top:24px;">
+    <div class="section-chip">🎾 Athlete Information</div>
+    <div class="field-group">
+      <div class="field-wrap">
+        <label class="field-label">Name of the Academy <span>(अकादमी का नाम)</span><span class="req">*</span></label>
+        <input class="field-input" type="text" placeholder="e.g. Sunrise Tennis Academy" id="academy" required>
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">Place of the Academy <span>(अकादमी का स्थान)</span><span class="req">*</span></label>
+        <input class="field-input" type="text" placeholder="e.g. Jaipur, Rajasthan" id="place" required>
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">Name of the Athlete <span>(खिलाड़ी का नाम)</span><span class="req">*</span></label>
+        <input class="field-input" type="text" placeholder="Your full name" id="athlete" required>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONSENT ── -->
+  <div class="card" style="margin-top:14px;">
+    <div class="section-chip">📋 Informed Consent</div>
+    <div class="consent-text">
+      <p>I understand that the purpose of this study is to gather information about your <strong>self-regulation practices during sport practice sessions</strong>. If you agree to participate, you will be asked to complete this questionnaire. Some questions may prompt reflection on your own behavior and experiences.</p>
+      <p>Participation in this study involves <strong>no risk</strong>. The potential benefits include contributing to the understanding of self-regulation in sport practice, which may ultimately benefit athletes and coaches in improving training strategies.</p>
+      <p>Your responses will be kept <strong>strictly confidential</strong>. Data will be analyzed and reported in aggregate form, and no personally identifiable information will be disclosed in any publications or presentations resulting from this study.</p>
+      <p>By providing your signature below, you indicate that you have read and understood this consent form and <strong>voluntarily agree to participate</strong> in this study.</p>
+    </div>
+    <div class="signature-row">
+      <div class="sig-field field-wrap">
+        <label class="field-label">Participant's Signature <span>(हस्ताक्षर)</span><span class="req">*</span></label>
+        <input class="field-input" type="text" placeholder="Type your full name as signature" id="signature" required>
+      </div>
+      <div class="sig-field field-wrap" style="max-width:180px;">
+        <label class="field-label">Date <span>(तारीख)</span><span class="req">*</span></label>
+        <input class="field-input" type="date" id="date" required>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION A: PLANNING (Q1–9) ── -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">Section A — Planning &amp; Forethought</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card" style="padding:16px 26px 10px; margin-top:8px;">
+    <p style="font-size:12px;color:var(--sub);line-height:1.6;">
+      <strong>Scale:</strong> &nbsp;1 = Never &nbsp;·&nbsp; 2 = Rarely &nbsp;·&nbsp; 3 = Occasionally &nbsp;·&nbsp; 4 = Sometimes &nbsp;·&nbsp; 5 = Often &nbsp;·&nbsp; 6 = Frequently &nbsp;·&nbsp; 7 = Always<br>
+      <em style="font-size:11.5px;">1 = कभी नहीं &nbsp;·&nbsp; 2 = बहुत कम &nbsp;·&nbsp; 3 = कभी-कभार &nbsp;·&nbsp; 4 = कभी &nbsp;·&nbsp; 5 = बहुत बार &nbsp;·&nbsp; 6 = अक्सर &nbsp;·&nbsp; 7 = हमेशा</em>
+    </p>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card">
+    <div><span class="q-number">1</span><span class="q-en">I determine how to approach a practice task before I begin.</span></div>
+    <div class="q-hi">मैं प्रैक्टिस कार्य को शुरू करने से पहले उसे कैसे पूरा करना है, यह निर्धारित करता/करती हूँ।</div>
+    <div class="scale-wrap">
+      <div class="radio-row scale-7" id="scale_q1">
+        <label class="radio-option"><input type="radio" name="q1" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+        <label class="radio-option"><input type="radio" name="q1" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card">
+    <div><span class="q-number">2</span><span class="q-en">Before practice tasks, I figure out my goals.</span></div>
+    <div class="q-hi">प्रैक्टिस के कार्यों से पहले, मैं अपने लक्ष्यों को तय करता/करती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7" id="scale_q2">
+      <label class="radio-option"><input type="radio" name="q2" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q2" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q2" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q2" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q2" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q2" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q2" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card">
+    <div><span class="q-number">3</span><span class="q-en">Before practice tasks, I carefully plan my course of action.</span></div>
+    <div class="q-hi">प्रैक्टिस कार्यों से पहले, मैं ध्यान से अपने कार्य की योजना बनाता/बनाती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q3" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q3" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q3" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q3" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q3" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q3" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q3" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card">
+    <div><span class="q-number">4</span><span class="q-en">Before practice tasks, I figure out what I need to do to accomplish my goals.</span></div>
+    <div class="q-hi">प्रैक्टिस कार्यों से पहले, मैं यह पता लगाता हूं कि अपने लक्ष्यों को पूरा करने के लिए मुझे क्या करने की आवश्यकता है।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q4" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q4" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q4" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q4" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q4" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q4" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q4" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card">
+    <div><span class="q-number">5</span><span class="q-en">Before practice tasks, I consider the parts of the task I have to complete.</span></div>
+    <div class="q-hi">प्रैक्टिस के कार्यों से पहले, मैं कार्य के उन हिस्सों पर विचार करता/करती हूं जिन्हें मुझे पूरा करना है।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q5" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q5" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q5" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q5" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q5" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q5" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q5" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card">
+    <div><span class="q-number">6</span><span class="q-en">I clearly plan my course of action before starting practice tasks.</span></div>
+    <div class="q-hi">मैं प्रैक्टिस कार्यों को शुरू करने से पहले अपनी क्रियाओं की स्पष्ट योजना बनाता/बनाती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q6" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q6" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q6" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q6" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q6" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q6" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q6" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card">
+    <div><span class="q-number">7</span><span class="q-en">I think about what a practice task requires me to do before I do it.</span></div>
+    <div class="q-hi">मैं किसी प्रैक्टिस कार्य को करने से पहले इस विचार करता/करती हूँ कि मुझे क्या करना होगा।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q7" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q7" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q7" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q7" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q7" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q7" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q7" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card">
+    <div><span class="q-number">8</span><span class="q-en">I try to understand the goal of a practice task before I do it.</span></div>
+    <div class="q-hi">मैं किसी प्रैक्टिस कार्य को करने से पहले उसके उद्देश्य को समझने की कोशिश करता/करती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q8" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q8" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q8" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q8" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q8" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q8" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q8" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card">
+    <div><span class="q-number">9</span><span class="q-en">Before I do a practice task, I think through the steps in my mind.</span></div>
+    <div class="q-hi">मैं किसी प्रैक्टिस कार्य को करने से पहले उसके चरणों के बारे में मन में सोचता/सोचती हूं।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q9" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q9" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q9" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q9" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q9" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q9" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q9" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- ── SECTION B: MONITORING & REFLECTION (Q10–16) ── -->
+  <div class="section-divider" style="margin-top:30px;">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">Section B — Monitoring &amp; Reflection</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" style="margin-top:14px;">
+    <div><span class="q-number">10</span><span class="q-en">I look back to check if what I did in practice was right.</span></div>
+    <div class="q-hi">मैं यह जांचने के लिए पीछे मुड़कर देखता/देखती हूं कि पिछले प्रैक्टिस में किया गया कार्य सही था या नहीं।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q10" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q10" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q10" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q10" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q10" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q10" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q10" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card">
+    <div><span class="q-number">11</span><span class="q-en">I look back to see if I did the correct procedures at practice.</span></div>
+    <div class="q-hi">मैं पिछले प्रैक्टिस में किये गए कार्यों के सही प्रक्रियाओं का विश्लेषण करता/करती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q11" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q11" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q11" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q11" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q11" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q11" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q11" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card">
+    <div><span class="q-number">12</span><span class="q-en">I check aspects of my workout while doing it.</span></div>
+    <div class="q-hi">मैं अपनी वर्कआउट के दौरान उसके विभिन्न पहलुओं की जाँच करता/करती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q12" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q12" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q12" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q12" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q12" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q12" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q12" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card">
+    <div><span class="q-number">13</span><span class="q-en">I reflect upon my actions at practice to see whether I can improve them.</span></div>
+    <div class="q-hi">मैं प्रैक्टिस में अपने कार्यों पर विचार (reflect) करता/करती हूँ कि क्या मैं उनमें सुधार कर सकता/सकती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q13" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q13" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q13" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q13" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q13" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q13" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q13" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card">
+    <div><span class="q-number">14</span><span class="q-en">After finishing, I look back on practice tasks to evaluate my performance.</span></div>
+    <div class="q-hi">समाप्त होने के बाद, मैं प्रैक्टिस कार्यों का समीक्षण करता/करती हूँ ताकि मैं अपने प्रदर्शन का मूल्यांकन कर सकूं।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q14" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q14" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q14" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q14" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q14" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q14" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q14" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card">
+    <div><span class="q-number">15</span><span class="q-en">I think about my past experiences at practice to gain new insights.</span></div>
+    <div class="q-hi">मैं नई अंतर्दृष्टि (insights) प्राप्त करने के लिए प्रैक्टिस में अपने पिछले अनुभवों के बारे में विचार करता/करती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q15" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q15" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q15" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q15" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q15" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q15" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q15" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card">
+    <div><span class="q-number">16</span><span class="q-en">When thinking about my practice, I reflect about my strengths and weaknesses.</span></div>
+    <div class="q-hi">प्रैक्टिस के बारे में सोचते समय, मैं अपनी ताकत और कमजोरियों (strengths and weaknesses) के बारे में विचार करता/करती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q16" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q16" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q16" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q16" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q16" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q16" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q16" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- ── SECTION C: SELF-EFFICACY (Q17–21) ── -->
+  <div class="section-divider" style="margin-top:30px;">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">Section C — Self-Efficacy &amp; Resourcefulness</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="card" style="padding:16px 26px 10px; margin-top:8px;">
+    <p style="font-size:12px;color:var(--sub);line-height:1.6;">
+      <strong>Scale:</strong> &nbsp;1 = Completely Disagree &nbsp;·&nbsp; 2 = Disagree &nbsp;·&nbsp; 3 = Slightly Disagree &nbsp;·&nbsp; 4 = Neutral &nbsp;·&nbsp; 5 = Slightly Agree &nbsp;·&nbsp; 6 = Agree &nbsp;·&nbsp; 7 = Completely Agree<br>
+      <em style="font-size:11.5px;">1 = पूरी तरह असहमत &nbsp;·&nbsp; 4 = तटस्थ &nbsp;·&nbsp; 7 = पूरी तरह सहमत</em>
+    </p>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" style="margin-top:14px;">
+    <div><span class="q-number">17</span><span class="q-en">I know how to handle unforeseen situations during practice, because I am resourceful.</span></div>
+    <div class="q-hi">मैं जानता हूं कि प्रैक्टिस के दौरान अप्रत्याशित परिस्थितियों का सामना कैसे करना है, क्योंकि मैं संसाधनशील (resourceful) हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q17" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q17" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q17" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q17" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q17" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q17" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q17" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card">
+    <div><span class="q-number">18</span><span class="q-en">When I am confronted with a difficulty during practice, I can usually find several solutions.</span></div>
+    <div class="q-hi">प्रैक्टिस के दौरान किसी कठिनाई का सामना करते समय, मैं आमतौर पर कई समाधान ढूंढ सकता/सकती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q18" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q18" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q18" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q18" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q18" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q18" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q18" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card">
+    <div><span class="q-number">19</span><span class="q-en">I am confident that I can deal efficiently with unexpected events at practice.</span></div>
+    <div class="q-hi">मुझे विश्वास है कि मैं प्रैक्टिस में अप्रत्याशित घटनाओं से प्रभावी ढंग निपट सकता/सकती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q19" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q19" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q19" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q19" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q19" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q19" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q19" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card">
+    <div><span class="q-number">20</span><span class="q-en">When facing difficulties at practice I can rely on my coping abilities.</span></div>
+    <div class="q-hi">प्रैक्टिस में कठिनाइयों का सामना करते समय मैं अपनी मुकाबला करने की क्षमताओं पर भरोसा कर सकता/सकती हूं।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q20" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q20" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q20" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q20" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q20" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q20" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q20" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q21 -->
+  <div class="q-card">
+    <div><span class="q-number">21</span><span class="q-en">No matter what comes my way at practice, I am usually able to handle it.</span></div>
+    <div class="q-hi">इससे कोई फर्क नहीं पड़ता कि प्रैक्टिस के दौरान मेरे रास्ते में क्या आता है, मैं आमतौर पर इसे संभालने में सक्षम हूं।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q21" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q21" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q21" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q21" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q21" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q21" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q21" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- ── SECTION D: EFFORT & CONCENTRATION (Q22–26) ── -->
+  <div class="section-divider" style="margin-top:30px;">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">Section D — Effort &amp; Concentration</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- Q22 -->
+  <div class="q-card" style="margin-top:14px;">
+    <div><span class="q-number">22</span><span class="q-en">I usually keep working hard even when sport training tasks become difficult.</span></div>
+    <div class="q-hi">मैं तब भी कड़ी मेहनत करता रहता/करती रहती हूं जब खेल प्रशिक्षण के कार्य कठिन हो जाते हैं।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q22" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q22" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q22" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q22" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q22" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q22" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q22" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q23 -->
+  <div class="q-card">
+    <div><span class="q-number">23</span><span class="q-en">I don't give up at practice even if a task is hard.</span></div>
+    <div class="q-hi">मैं प्रैक्टिस में कठिन कार्य होने पर भी हार नहीं मानता/मानती।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q23" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q23" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q23" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q23" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q23" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q23" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q23" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q24 -->
+  <div class="q-card">
+    <div><span class="q-number">24</span><span class="q-en">I usually put forth my best effort when performing tasks at practice.</span></div>
+    <div class="q-hi">मैं प्रैक्टिस में कार्यों को करते समय अपना सर्वश्रेष्ठ प्रयास करता/करती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q24" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q24" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q24" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q24" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q24" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q24" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q24" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q25 -->
+  <div class="q-card">
+    <div><span class="q-number">25</span><span class="q-en">Even when I don't like a task during practice, I work hard.</span></div>
+    <div class="q-hi">प्रैक्टिस के दौरान जब मुझे कोई काम पसंद नहीं आता, तब भी मैं कड़ी मेहनत करता/करती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q25" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q25" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q25" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q25" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q25" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q25" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q25" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- Q26 -->
+  <div class="q-card">
+    <div><span class="q-number">26</span><span class="q-en">I concentrate fully when I do a task at practice.</span></div>
+    <div class="q-hi">मैं प्रैक्टिस में किसी कार्य को करते समय पूरा ध्यान देता/देती हूँ।</div>
+    <div class="scale-wrap"><div class="radio-row scale-7">
+      <label class="radio-option"><input type="radio" name="q26" value="1"><span class="radio-dot"></span><span class="radio-num">1</span></label>
+      <label class="radio-option"><input type="radio" name="q26" value="2"><span class="radio-dot"></span><span class="radio-num">2</span></label>
+      <label class="radio-option"><input type="radio" name="q26" value="3"><span class="radio-dot"></span><span class="radio-num">3</span></label>
+      <label class="radio-option"><input type="radio" name="q26" value="4"><span class="radio-dot"></span><span class="radio-num">4</span></label>
+      <label class="radio-option"><input type="radio" name="q26" value="5"><span class="radio-dot"></span><span class="radio-num">5</span></label>
+      <label class="radio-option"><input type="radio" name="q26" value="6"><span class="radio-dot"></span><span class="radio-num">6</span></label>
+      <label class="radio-option"><input type="radio" name="q26" value="7"><span class="radio-dot"></span><span class="radio-num">7</span></label>
+    </div></div>
+  </div>
+
+  <!-- ── SUBMIT ── -->
+  <div class="submit-wrap">
+    <button class="submit-btn" onclick="submitForm()">
+      <span class="ball-icon"></span>
+      Submit Questionnaire &nbsp;|&nbsp; फ़ॉर्म जमा करें
+    </button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2>Response Submitted!</h2>
+    <p>Thank you for completing the SRL-SP Questionnaire.<br>
+    Your responses have been recorded and will remain confidential.<br><br>
+    <em style="color:#5a8a5a;">इस प्रश्नावली को पूरा करने के लिए धन्यवाद।<br>आपकी प्रतिक्रियाएँ गोपनीय रहेंगी।</em></p>
+  </div>
+
+  <div class="form-footer">
+    SRL-SP Questionnaire &nbsp;·&nbsp; <span>Tennis Academy</span> &nbsp;·&nbsp; Responses are confidential
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  const TOTAL = 26;
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxeFCeFpMHP60cRzO3FM38li1kYyiseF2OTb_HyXPV8Hchc7Unr1gyWalpiCGfUHl5r/exec';
+
+  // Progress tracking
+  function updateProgress() {
+    let answered = 0;
+    for (let i = 1; i <= TOTAL; i++) {
+      if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+    }
+    const pct = Math.round((answered / TOTAL) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${answered} of ${TOTAL} answered`;
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+
+  // Highlight selected radio option
+  document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const row = this.closest('.radio-row');
+      row.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected-opt'));
+      this.closest('.radio-option').classList.add('selected-opt');
+      updateProgress();
+    });
+  });
+
+  // Submit handler
+  async function submitForm() {
+    const academy   = document.getElementById('academy').value.trim();
+    const place     = document.getElementById('place').value.trim();
+    const athlete   = document.getElementById('athlete').value.trim();
+    const signature = document.getElementById('signature').value.trim();
+    const date      = document.getElementById('date').value;
+
+    if (!academy || !place || !athlete || !signature || !date) {
+      alert('Please fill in all athlete information and consent fields.\nकृपया सभी जानकारी भरें।');
+      return;
+    }
+
+    let unanswered = [];
+    for (let i = 1; i <= TOTAL; i++) {
+      if (!document.querySelector(`input[name="q${i}"]:checked`)) {
+        unanswered.push(i);
+      }
+    }
+    if (unanswered.length > 0) {
+      alert(`Please answer all questions. Unanswered: Q${unanswered.slice(0,5).join(', Q')}${unanswered.length > 5 ? '...' : ''}\nकृपया सभी प्रश्नों का उत्तर दें।`);
+      return;
+    }
+
+    // Collect all data
+    const data = {
+      Timestamp: new Date().toLocaleString(),
+      Academy: academy,
+      Place: place,
+      Athlete: athlete,
+      Signature: signature,
+      Date: date
+    };
+    for (let i = 1; i <= TOTAL; i++) {
+      data[`Q${i}`] = document.querySelector(`input[name="q${i}"]:checked`).value;
+    }
+
+    const btn = document.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting... / जमा हो रहा है...';
+
+    function showSuccess() {
+      document.querySelectorAll('.q-card, .card, .section-divider').forEach(el => {
+        el.style.display = 'none';
+      });
+      document.querySelector('.submit-wrap').style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+      document.getElementById('progressBar').style.width = '100%';
+      document.getElementById('progressText').textContent = '26 of 26 answered';
+      document.getElementById('progressPct').textContent = '100%';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showError() {
+      btn.disabled = false;
+      btn.innerHTML = '<span class="ball-icon"></span> Submit Questionnaire &nbsp;|&nbsp; फ़ॉर्म जमा करें';
+      alert('Submission failed. Please check your internet connection and try again.\nकृपया इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।');
+    }
+
+    try {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', SCRIPT_URL, true);
+      xhr.setRequestHeader('Content-Type', 'text/plain');
+      xhr.onload = function() { showSuccess(); };
+      xhr.onerror = function() { showSuccess(); };
+      xhr.ontimeout = function() { showError(); };
+      xhr.timeout = 15000;
+      xhr.send(JSON.stringify(data));
+    } catch (err) {
+      showError();
+    }
+  }
+
+  // Set today's date as default
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date').value = today;
+
+  updateProgress();
+</script>
+</body>
+</html>
